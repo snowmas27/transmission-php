@@ -1,33 +1,25 @@
 <?php
-
 namespace Transmission\Model;
 
 use Transmission\Util\PropertyMapper;
 
+/**
+ * @author Ramon Kleiss <ramon@cubilon.nl>
+ */
 class Torrent extends AbstractModel
 {
     /**
-     * @var int
+     * @var integer
      */
     protected $id;
 
     /**
-     * @var string
-     */
-    protected $comment;
-
-    /**
-     * @var int
-     */
-    protected $doneDate;
-
-    /**
-     * @var int
+     * @var integer
      */
     protected $eta;
 
     /**
-     * @var int
+     * @var integer
      */
     protected $size;
 
@@ -47,62 +39,57 @@ class Torrent extends AbstractModel
     protected $status;
 
     /**
-     * @var bool
+     * @var boolean
      */
     protected $finished;
 
     /**
-     * @var bool
-     */
-    protected $private;
-
-    /**
-     * @var int
+     * @var integer
      */
     protected $startDate;
 
     /**
-     * @var int
+     * @var integer
      */
     protected $uploadRate;
 
     /**
-     * @var int
+     * @var integer
      */
     protected $downloadRate;
 
     /**
-     * @var int
+     * @var integer
      */
     protected $peersConnected;
 
     /**
-     * @var float
+     * @var double
      */
     protected $percentDone;
 
     /**
      * @var array
      */
-    protected $files = [];
+    protected $files = array();
 
     /**
      * @var array
      */
-    protected $peers = [];
+    protected $peers = array();
 
     /**
      * @var array
      */
-    protected $trackers = [];
+    protected $trackers = array();
 
     /**
      * @var array
      */
-    protected $trackerStats = [];
+    protected $trackerStats = array();
 
     /**
-     * @var float
+     * @var double
      */
     protected $uploadRatio;
 
@@ -112,145 +99,222 @@ class Torrent extends AbstractModel
     protected $downloadDir;
 
     /**
-     * @var int
+     * @var integer
      */
     protected $downloadedEver;
 
     /**
-     * @var int
+     * @var integer
      */
     protected $uploadedEver;
 
-    public function setId(int $id)
+    /**
+     * @var integer
+     */
+    protected $activityDate;
+
+    /**
+     * @var integer
+     */
+    protected $totalSize;
+
+    /** @var string */
+    protected $magnetLink;
+
+    /**
+     * @param integer $id
+     */
+    public function setId($id)
     {
-        $this->id = $id;
+        $this->id = (integer) $id;
     }
 
-    public function getId(): int
+    /**
+     * @return integer
+     */
+    public function getId()
     {
         return $this->id;
     }
 
-    public function setEta(int $eta)
+    /**
+     * @param integer $eta
+     */
+    public function setEta($eta)
     {
-        $this->eta = $eta;
+        $this->eta = (integer) $eta;
     }
 
-    public function getEta(): int
+    /**
+     * @return integer
+     */
+    public function getEta()
     {
         return $this->eta;
     }
 
-    public function setSize(int $size)
+    /**
+     * @param integer $size
+     */
+    public function setSize($size)
     {
-        $this->size = $size;
+        $this->size = (integer) $size;
     }
 
-    public function getSize(): int
+    /**
+     * @return integer
+     */
+    public function getSize()
     {
         return $this->size;
     }
 
-    public function setName(string $name)
+    /**
+     * @param string $name
+     */
+    public function setName($name)
     {
-        $this->name = $name;
+        $this->name = (string) $name;
     }
 
-    public function getName(): string
+    /**
+     * @return string
+     */
+    public function getName()
     {
         return $this->name;
     }
 
-    public function setHash(string $hash)
+    /**
+     * @param string $hash
+     */
+    public function setHash($hash)
     {
-        $this->hash = $hash;
+        $this->hash = (string) $hash;
     }
 
-    public function getHash(): string
+    /**
+     * @return string
+     */
+    public function getHash()
     {
         return $this->hash;
     }
 
-    public function setStatus(int $status)
+    /**
+     * @param integer|Status $status
+     */
+    public function setStatus($status)
     {
         $this->status = new Status($status);
     }
 
-    public function getStatus(): int
+    /**
+     * @return integer
+     */
+    public function getStatus()
     {
         return $this->status->getValue();
     }
 
-    public function setFinished(bool $finished)
+    /**
+     * @param boolean $finished
+     */
+    public function setFinished($finished)
     {
-        $this->finished = $finished;
+        $this->finished = (boolean) $finished;
     }
 
-    public function isFinished(): bool
+    /**
+     * @return boolean
+     */
+    public function isFinished()
     {
-        return $this->finished || 100 == $this->getPercentDone();
+        return ($this->finished || (int) $this->getPercentDone() == 100);
     }
 
-    public function setPrivate(bool $private)
+    /**
+     * @var integer $startDate
+     */
+    public function setStartDate($startDate)
     {
-        $this->private = $private;
+        $this->startDate = (integer) $startDate;
     }
 
-    public function isPrivate(): bool
-    {
-        return $this->private;
-    }
-
-    public function setStartDate(int $startDate)
-    {
-        $this->startDate = $startDate;
-    }
-
-    public function getStartDate(): int
+    /**
+     * @return integer
+     */
+    public function getStartDate()
     {
         return $this->startDate;
     }
-
-    public function setUploadRate(int $rate)
+    /**
+     * @var integer $rate
+     */
+    public function setUploadRate($rate)
     {
-        $this->uploadRate = $rate;
+        $this->uploadRate = (integer) $rate;
     }
 
-    public function getUploadRate(): int
+    /**
+     * @return integer
+     */
+    public function getUploadRate()
     {
         return $this->uploadRate;
     }
 
-    public function setDownloadRate(int $rate)
+    /**
+     * @param integer $rate
+     */
+    public function setDownloadRate($rate)
     {
-        $this->downloadRate = $rate;
+        $this->downloadRate = (integer) $rate;
     }
 
-    public function setPeersConnected(int $peersConnected)
+    /**
+     * @param integer $peersConnected
+     */
+    public function setPeersConnected($peersConnected)
     {
-        $this->peersConnected = $peersConnected;
+        $this->peersConnected = (integer) $peersConnected;
     }
 
-    public function getPeersConnected(): int
+    /**
+     * @return integer
+     */
+    public function getPeersConnected()
     {
         return $this->peersConnected;
     }
 
-    public function getDownloadRate(): int
+    /**
+     * @return integer
+     */
+    public function getDownloadRate()
     {
         return $this->downloadRate;
     }
 
-    public function setPercentDone(float $done)
+    /**
+     * @param double $done
+     */
+    public function setPercentDone($done)
     {
-        $this->percentDone = $done;
+        $this->percentDone = (double) $done;
     }
 
-    public function getPercentDone(): float
+    /**
+     * @return double
+     */
+    public function getPercentDone()
     {
-        return $this->percentDone * 100;
+        return $this->percentDone * 100.0;
     }
 
+    /**
+     * @param array $files
+     */
     public function setFiles(array $files)
     {
         $this->files = array_map(function ($file) {
@@ -258,11 +322,17 @@ class Torrent extends AbstractModel
         }, $files);
     }
 
-    public function getFiles(): array
+    /**
+     * @return array
+     */
+    public function getFiles()
     {
         return $this->files;
     }
 
+    /**
+     * @param array $peers
+     */
     public function setPeers(array $peers)
     {
         $this->peers = array_map(function ($peer) {
@@ -270,11 +340,16 @@ class Torrent extends AbstractModel
         }, $peers);
     }
 
-    public function getPeers(): array
+    /**
+     * @return array
+     */
+    public function getPeers()
     {
         return $this->peers;
     }
-
+    /**
+     * @param array $trackerStats
+     */
     public function setTrackerStats(array $trackerStats)
     {
         $this->trackerStats = array_map(function ($trackerStats) {
@@ -282,11 +357,17 @@ class Torrent extends AbstractModel
         }, $trackerStats);
     }
 
-    public function getTrackerStats(): array
+    /**
+     * @return array
+     */
+    public function getTrackerStats()
     {
         return $this->trackerStats;
     }
 
+    /**
+     * @param array $trackers
+     */
     public function setTrackers(array $trackers)
     {
         $this->trackers = array_map(function ($tracker) {
@@ -294,120 +375,165 @@ class Torrent extends AbstractModel
         }, $trackers);
     }
 
-    public function getTrackers(): array
+    /**
+     * @return array
+     */
+    public function getTrackers()
     {
         return $this->trackers;
     }
 
-    public function setUploadRatio(float $ratio)
+    /**
+     * @param double $ratio
+     */
+    public function setUploadRatio($ratio)
     {
-        $this->uploadRatio = $ratio;
+        $this->uploadRatio = (double) $ratio;
     }
 
-    public function getUploadRatio(): float
+    /**
+     * @return double
+     */
+    public function getUploadRatio()
     {
         return $this->uploadRatio;
     }
 
-    public function isStopped(): bool
+    /**
+     * @return boolean
+     */
+    public function isStopped()
     {
         return $this->status->isStopped();
     }
 
-    public function isChecking(): bool
+    /**
+     * @return boolean
+     */
+    public function isChecking()
     {
         return $this->status->isChecking();
     }
 
-    public function isDownloading(): bool
+    /**
+     * @return boolean
+     */
+    public function isDownloading()
     {
         return $this->status->isDownloading();
     }
 
-    public function isSeeding(): bool
+    /**
+     * @return boolean
+     */
+    public function isSeeding()
     {
         return $this->status->isSeeding();
     }
 
-    public function getDownloadDir(): string
+    /**
+     * @return string
+     */
+    public function getDownloadDir()
     {
         return $this->downloadDir;
     }
 
-    public function setDownloadDir(string $downloadDir)
+    /**
+     * @param string $downloadDir
+     */
+    public function setDownloadDir($downloadDir)
     {
         $this->downloadDir = $downloadDir;
     }
 
-    public function getDownloadedEver(): int
-    {
+    /**
+     * @return int
+     */
+    public function getDownloadedEver() {
         return $this->downloadedEver;
     }
 
-    public function setDownloadedEver(int $downloadedEver)
-    {
+    /**
+     * @param int $downloadedEver
+     */
+    public function setDownloadedEver($downloadedEver) {
         $this->downloadedEver = $downloadedEver;
     }
 
-    public function getUploadedEver(): int
-    {
+    /**
+     * @return int
+     */
+    public function getUploadedEver() {
         return $this->uploadedEver;
     }
 
-    public function setUploadedEver(int $uploadedEver)
-    {
+    /**
+     * @param int $uploadedEver
+     */
+    public function setUploadedEver($uploadedEver) {
         $this->uploadedEver = $uploadedEver;
     }
 
-    public function getComment(): string
+    public function getActivityDate()
     {
-        return $this->comment;
+        return $this->activityDate;
     }
 
-    public function setComment(string $comment)
+    public function setActivityDate($activityDate)
     {
-        $this->comment = $comment;
+        $this->activityDate = $activityDate;
     }
 
-    public function getDoneDate(): int
+    public function getTotalSize()
     {
-        return $this->doneDate;
+        return $this->totalSize;
     }
 
-    public function setDoneDate(int $doneDate)
+    public function setTotalSize($totalSize)
     {
-        $this->doneDate = $doneDate;
+        $this->totalSize = $totalSize;
+    }
+
+    public function getMagnetLink()
+    {
+        return $this->magnetLink;
+    }
+
+    public function setMagnetLink($magnetLink)
+    {
+        $this->magnetLink = $magnetLink;
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public static function getMapping(): array
     {
         return [
-            'comment'        => 'comment',
-            'doneDate'       => 'doneDate',
-            'downloadDir'    => 'downloadDir',
-            'downloadedEver' => 'downloadedEver',
-            'eta'            => 'eta',
-            'files'          => 'files',
-            'hashString'     => 'hash',
-            'id'             => 'id',
-            'isFinished'     => 'finished',
-            'isPrivate'      => 'private',
-            'name'           => 'name',
-            'peers'          => 'peers',
+            'id' => 'id',
+            'eta' => 'eta',
+            'sizeWhenDone' => 'size',
+            'name' => 'name',
+            'status' => 'status',
+            'isFinished' => 'finished',
+            'rateUpload' => 'uploadRate',
+            'rateDownload' => 'downloadRate',
+            'percentDone' => 'percentDone',
+            'files' => 'files',
+            'peers' => 'peers',
             'peersConnected' => 'peersConnected',
-            'percentDone'    => 'percentDone',
-            'rateDownload'   => 'downloadRate',
-            'rateUpload'     => 'uploadRate',
-            'sizeWhenDone'   => 'size',
-            'startDate'      => 'startDate',
-            'status'         => 'status',
-            'trackers'       => 'trackers',
-            'trackerStats'   => 'trackerStats',
-            'uploadedEver'   => 'uploadedEver',
-            'uploadRatio'    => 'uploadRatio',
+            'trackers' => 'trackers',
+            'trackerStats' => 'trackerStats',
+            'startDate' => 'startDate',
+            'uploadRatio' => 'uploadRatio',
+            'hashString' => 'hash',
+            'downloadDir' => 'downloadDir',
+            'downloadedEver' => 'downloadedEver',
+            'uploadedEver' => 'uploadedEver',
+            'activityDate' => 'activityDate',
+            'totalSize' => 'totalSize',
+            'magnetLink' => 'magnetLink',
         ];
     }
 }
